@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body style="text-align:center; font-family:Arial;">
+    <h2>Front Camera Photo Capture</h2>
+
+    <video id="video" width="300" autoplay playsinline></video>
+    <br><br>
+    <button id="captureBtn">Capture Photo</button>
+    <br><br>
+    <canvas id="canvas" width="300"></canvas>
+
+    <script>
+        async function openFrontCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: "user" }
+                });
+                document.getElementById("video").srcObject = stream;
+            } catch (err) {
+                alert("Camera access failed: " + err);
+            }
+        }
+
+        document.getElementById("captureBtn").onclick = function () {
+            const video = document.getElementById("video");
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        };
+
+        openFrontCamera();
+    </script>
+</body>
+</html>
